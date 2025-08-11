@@ -81,6 +81,7 @@ export const Card = ({ title, img, imgPosition, counter }: CardProps) => {
             alt={'123'}
             width={1000}
             height={1000}
+            quality={90}
             className={cn(
               'object-cover',
               'absolute',
@@ -147,7 +148,7 @@ export const Card = ({ title, img, imgPosition, counter }: CardProps) => {
               getImgPosition() === 'bottom' &&
                 'bg-[#3F3F3F66] border-none backdrop-blur-md text-white',
               typeof counter === 'number' &&
-                'border border-[#B4B4B488] rounded-full',
+                'border-[0.5px] border-[#B4B4B488] rounded-full',
               typeof counter === 'string' &&
                 cn(
                   'border-none rounded-full text-white',
