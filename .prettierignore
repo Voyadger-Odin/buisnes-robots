@@ -1,0 +1,22 @@
+# Next.js
+.next
+out
+build
+
+# Логи
+logs
+*.log
+
+# Env
+.env.local
+.env
+
+# Node.js
+node_modules
+package-lock.json
+yarn.lock
+
+# IDE
+.idea
+.vscode
+*.swp
