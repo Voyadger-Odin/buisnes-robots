@@ -69,11 +69,17 @@ export default function Home() {
           </div>
 
           <div className={'flex flex-col gap-4'}>
-            <Card title={text} img={'./img1.jpg'} counter={counter} />
+            <Card
+              title={text}
+              img={'./img1.jpg'}
+              imgPosition={'left'}
+              counter={counter}
+            />
 
             <Card
               title={'quenching your thirst. It plays a cru'}
               img={'./img1.jpg'}
+              imgPosition={'left'}
               counter={10}
             />
             <Card
@@ -81,6 +87,7 @@ export default function Home() {
                 "Drinking water isn't just about quenching your thirst. It plays a cru bbb"
               }
               img={'./img1.jpg'}
+              imgPosition={'left'}
               counter={10}
             />
             <Card
@@ -88,6 +95,7 @@ export default function Home() {
                 "Drinking water isn't just about quenching your thirst. It plays a crucial role in  in maintaining the a bbbbbbbbb"
               }
               img={'./img1.jpg'}
+              imgPosition={'left'}
               counter={10}
             />
             <Card
@@ -95,6 +103,7 @@ export default function Home() {
                 "Drinking water isn't just about quenching your thirst. It plays a crucial role in maintaining the proper functioning of your body a bbbbbbbbb"
               }
               img={'./img1.jpg'}
+              imgPosition={'left'}
               counter={10}
             />
           </div>

@@ -1,13 +1,13 @@
 import { cn } from '@/shared/lib/utils';
 import { MenuIcon } from '@/shared/icons/MenuIcon';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 
 interface CardProps {
   title: string;
   img?: string | StaticImport;
-  imgPosition?: 'left' | 'top' | 'bottom';
+  imgPosition?: 'left' | 'top' | 'bottom' | undefined;
   counter?: number | string;
 }
 
@@ -27,19 +27,29 @@ export const Card = ({ title, img, imgPosition, counter }: CardProps) => {
       // @ts-expect-error
       const rectCount = countElement.getBoundingClientRect();
 
-      if (rectText.x + 10 >= rectCount.x) {
+      if (
+        rectText.x + 10 >= rectCount.x &&
+        counter &&
+        getImgPosition() !== 'bottom' &&
+        (getImgPosition() !== 'left' ||
+          (getImgPosition() === 'left' && title.length > 40))
+      ) {
         setOverlayText(true);
       } else {
         setOverlayText(false);
       }
     }
-  }, [title]);
+  }, [title, counter, imgPosition]);
 
-  const getImgPosition = useCallback((): 'left' | 'top' | 'bottom' => {
+  const getImgPosition = useCallback(():
+    | 'left'
+    | 'top'
+    | 'bottom'
+    | undefined => {
     if (imgPosition) {
       return imgPosition;
     }
-    return 'left';
+    return undefined;
   }, [imgPosition]);
 
   return (
@@ -49,18 +59,13 @@ export const Card = ({ title, img, imgPosition, counter }: CardProps) => {
         'w-[345px] min-h-[68px] p-4 overflow-hidden',
         'shadow-[0_0_8px_#0000001A] rounded-[25px]',
         'flex gap-2',
-        overlayText &&
-          counter &&
-          getImgPosition() !== 'bottom' &&
-          (getImgPosition() !== 'left' ||
-            (getImgPosition() === 'left' && title.length > 40)) &&
-          'pb-[36px]',
+        !getImgPosition() && 'flex-row items-center',
         getImgPosition() === 'left' && 'flex-row items-center',
         getImgPosition() === 'top' && 'flex-col',
         getImgPosition() === 'bottom' && 'flex-col-reverse',
       )}
     >
-      {img && (
+      {img && imgPosition && (
         <div
           className={cn(
             getImgPosition() === 'left' &&
@@ -100,7 +105,16 @@ export const Card = ({ title, img, imgPosition, counter }: CardProps) => {
           <span className={'text-gray-400'}>Some text</span>
         )}
 
-        <span ref={textEndRef} className={'opacity-0'}></span>
+        {counter && (
+          <>
+            <span ref={textEndRef} className={'opacity-0 w-[100px]'}>
+              1
+            </span>
+            <span className={'opacity-0 px-3'}>
+              {overlayText ? counter : ''}
+            </span>
+          </>
+        )}
       </div>
       <div
         className={cn(
@@ -111,7 +125,7 @@ export const Card = ({ title, img, imgPosition, counter }: CardProps) => {
       >
         <div
           className={cn(
-            'py-2 cursor-pointer',
+            'py-2 cursor-pointer relative',
             getImgPosition() === 'top' &&
               'bg-[#8585854D] py-[10px] px-[6px] rounded-[11px] w-[28px] h-[26px] my-3 backdrop-blur-sm',
           )}
@@ -121,17 +135,19 @@ export const Card = ({ title, img, imgPosition, counter }: CardProps) => {
 
         <div className={'flex-1'} />
 
-        {counter && (
+        {counter && counter != '0' && (
           <div
             ref={countRef}
             className={cn(
-              'w-fit min-w-[22px] h-[22px] px-[8px] pointer-events-none',
+              'absolute bottom-[10px] right-0',
+              'w-fit min-w-[22px] h-[22px] pointer-events-none',
               'flex items-center justify-center',
               'text-[#B4B4B4] text-[12px] font-[Urbanist]',
+              `${counter}`.length > 1 && 'px-[8px]',
               getImgPosition() === 'bottom' &&
                 'bg-[#3F3F3F66] border-none backdrop-blur-md text-white',
               typeof counter === 'number' &&
-                'border border-[#B4B4B4] rounded-full',
+                'border border-[#B4B4B488] rounded-full',
               typeof counter === 'string' &&
                 cn(
                   'border-none rounded-full text-white',
