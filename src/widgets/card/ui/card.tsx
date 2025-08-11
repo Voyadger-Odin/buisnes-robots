@@ -91,7 +91,7 @@ export const Card = ({ title, img, imgPosition, counter }: CardProps) => {
       )}
       <div
         className={
-          'flex-1 break-words text-[#3B4552] font-[Urbanist] tracking-[0px] font-normal text-[14px] leading-[140%]'
+          'flex-1 break-all text-[#3B4552] font-[Urbanist] tracking-[0px] font-normal text-[14px] leading-[140%]'
         }
       >
         {title ? (
