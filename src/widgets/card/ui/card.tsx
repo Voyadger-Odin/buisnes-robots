@@ -68,31 +68,42 @@ export const Card = ({ title, img, imgPosition, counter }: CardProps) => {
       {img && imgPosition && (
         <div
           className={cn(
-            getImgPosition() === 'left' &&
-              'w-[58px] h-full min-h-[58px] relative',
-            getImgPosition() === 'top' &&
-              'w-full h-[calc(180px-16px)] rounded-b-[5px] rounded-t-6',
-            getImgPosition() === 'bottom' &&
-              'w-full h-[calc(180px-16px)] rounded-b-6 rounded-t-[5px]',
+            (getImgPosition() === 'top' || getImgPosition() === 'bottom') &&
+              'h-[calc(180px-16px)]',
           )}
         >
-          <Image
-            src={img}
-            alt={'123'}
-            width={1000}
-            height={1000}
-            quality={90}
+          <div
             className={cn(
-              'object-cover',
-              'absolute',
+              'overflow-hidden',
               getImgPosition() === 'left' &&
-                'min-w-[58px] w-[58px] h-[58px] rounded-[13px] top-0',
+                'w-[58px] h-full min-h-[58px] relative',
               getImgPosition() === 'top' &&
-                'w-full h-[180px] absolute top-0 left-0',
+                'w-full h-[180px] absolute top-0 left-0 p-px',
               getImgPosition() === 'bottom' &&
-                'w-full h-[180px] absolute bottom-0 left-0',
+                'w-full h-[calc(180px-16px)] absolute bottom-0 left-0 p-px',
             )}
-          />
+          >
+            <div
+              className={cn(
+                'overflow-hidden',
+                getImgPosition() === 'left' &&
+                  'min-w-[58px] w-[58px] h-[58px] rounded-[13px] top-0',
+                getImgPosition() === 'top' &&
+                  'w-full h-full rounded-b-[5px] rounded-t-[24px]',
+                getImgPosition() === 'bottom' &&
+                  'w-full h-full rounded-b-[24px] rounded-t-[5px]',
+              )}
+            >
+              <Image
+                src={img}
+                alt={'123'}
+                width={1000}
+                height={1000}
+                quality={90}
+                className={cn('object-cover')}
+              />
+            </div>
+          </div>
         </div>
       )}
       <div
